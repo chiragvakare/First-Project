@@ -1,0 +1,162 @@
+#include <stdio.h>
+#define MAXSIZE 10
+
+typedef struct Stack
+{
+    int entry[MAXSIZE];
+    int top;
+}stack;
+
+void init(stack * sptr)
+{
+    sptr->top=0;
+}
+
+int isFull(stack * sptr)
+{
+    if(sptr->top==MAXSIZE)
+        return 1;
+    return 0;    
+}
+
+int isEmpty(stack * sptr)
+{
+    if(sptr->top==0)
+        return 1;
+    return 0;    
+}
+
+void push(stack * sptr)
+{
+    int item;
+    if(isFull(sptr))
+        printf("STACK is full......\n");
+    else
+    {
+        printf("please enter element.....\n");
+        scanf("%d",&item);
+        
+        sptr->entry[sptr->top]=item;
+        sptr->top++;
+    }
+}
+
+void pop(stack * sptr)
+{
+    int item;
+    if(isEmpty(sptr))
+        printf("STACK is empty......\n");
+    else
+    {
+        sptr->top--;
+        item = sptr->entry[sptr->top];
+        printf("\t%d is deleted from STACK....\n",item);
+    }
+}
+
+void peep(stack * sptr)
+{
+    int i,item;
+    if(isEmpty(sptr))
+        printf("STACK is empty......\n");
+    else
+    {
+        printf("STACK elements are .....\n");
+        for(i=sptr->top-1;i>=0;i--)
+            printf("\t%d\n",sptr->entry[i]);
+    }
+}
+
+void add(stack * sptr)
+{
+    push(sptr);
+}
+
+void searchByIndex(stack * sptr,int index)
+{
+    int i;
+    if(isEmpty(sptr))
+        printf("STACK is empty......\n");
+    else
+    {
+        int status = 0;
+        for(i=sptr->top-1;i>=0;i--)
+        {
+            if(i==index){
+                printf("\t Element present on index ( %d ) is %d\n",index,sptr->entry[index]);
+                status = 1;
+                break;
+            }    
+        }
+        if(status==0)
+            printf("\t -1");
+    }
+}
+
+void searchByElement(stack * sptr,int element)
+{
+    int i;
+    int count = 0;
+    if(isEmpty(sptr))
+        printf("STACK is empty......\n");
+    else
+    {
+        int status = 0;
+        for(i=sptr->top-1;i>=0;i--)
+        {
+            count++;
+            if(sptr->entry[i]==element){
+                printf("\t %d present on index ( %d ) \n",element,count);
+                status = 1;
+                break;
+            }    
+        }
+        if(status==0)
+            printf("\t -1");
+    }
+}
+
+void main()
+{
+    stack s;
+    int ch;
+    init(&s);
+    do{
+        printf("\nPress 1 for Insert\nPress 2 for Remove\nPress 3 for Display\nPress 4 for Add\nPress 5 for Search By Index\nPress 6 for Search By Element\nPress 7 for Exit\n\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1 : 
+                     push(&s);
+                     break;
+                     
+            case 2 : 
+                     pop(&s);
+                     break;        
+                     
+            case 3 : 
+                     peep(&s);
+                     break;        
+            
+            case 4 : 
+                     add(&s);
+                     break; 
+            
+            case 5 : 
+                     int index;
+                     printf("Please enter index\n");
+                     scanf("%d",&index);
+                     searchByIndex(&s,index);
+                     break;
+                     
+            case 6 : 
+                     int element;
+                     printf("Please enter element\n");
+                     scanf("%d",&element);
+                     searchByElement(&s,element);
+                     break;         
+        }
+    }while(ch!=7);
+}
+
+
+
