@@ -1,0 +1,93 @@
+#include <stdio.h>
+#define MAXSIZE 10
+
+typedef struct Stack
+{
+    int entry[MAXSIZE];
+    int top;
+}stack;
+
+void init(stack * sptr)
+{
+    sptr->top=0;
+}
+
+int isFull(stack * sptr)
+{
+    if(sptr->top==MAXSIZE)
+        return 1;
+    return 0;    
+}
+
+int isEmpty(stack * sptr)
+{
+    if(sptr->top==0)
+        return 1;
+    return 0;    
+}
+
+void push(stack * sptr)
+{
+    int item;
+    if(isFull(sptr))
+        printf("STACK is full......\n");
+    else
+    {
+        printf("please enter element.....\n");
+        scanf("%d",&item);
+        
+        sptr->entry[sptr->top]=item;
+        sptr->top++;
+    }
+}
+
+void pop(stack * sptr)
+{
+    int item;
+    if(isEmpty(sptr))
+        printf("STACK is empty......\n");
+    else
+    {
+        sptr->top--;
+        item = sptr->entry[sptr->top];
+        printf("\t%d is deleted from STACK....\n",item);
+    }
+}
+
+void peep(stack * sptr)
+{
+    int i,item;
+    if(isEmpty(sptr))
+        printf("STACK is empty......\n");
+    else
+    {
+        printf("STACK elements are .....\n");
+        for(i=sptr->top-1;i>=0;i--)
+            printf("\t%d\n",sptr->entry[i]);
+    }
+}
+
+void main()
+{
+    stack s;
+    int ch;
+    init(&s);
+    do{
+        printf("\nPress 1 for Insert\nPress 2 for Remove\nPress 3 for Display\nPress 4 for Exit\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1 : 
+                     push(&s);
+                     break;
+                     
+            case 2 : 
+                     pop(&s);
+                     break;        
+                     
+            case 3 : 
+                     peep(&s);
+                     break;         
+        }
+    }while(ch!=4);
+}
+
